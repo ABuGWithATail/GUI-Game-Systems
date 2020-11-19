@@ -14,15 +14,15 @@ public class KeyBind : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        keys.Add("Up", (KeyCode.W));
+        keys.Add("Up", KeyCode.W);
         keys.Add("Left", KeyCode.A);
         keys.Add("Down", KeyCode.S);
         keys.Add("Right", KeyCode.D);
         keys.Add("Jump", KeyCode.Space);
         keys.Add("Sprint", KeyCode.LeftShift);
-        keys.Add("Crouch", (KeyCode.LeftControl));
-        keys.Add("Harm", (KeyCode.E));
-        keys.Add("Pause", (KeyCode.Escape));
+        keys.Add("Crouch", KeyCode.LeftControl);
+        keys.Add("Harm", KeyCode.E);
+        keys.Add("Pause", KeyCode.Escape);
 
 
         Up.text = keys["Up"].ToString();
@@ -34,6 +34,7 @@ public class KeyBind : MonoBehaviour
         Crouch.text = keys["Crouch"].ToString();
         Harm.text = keys["Harm"].ToString();
         Pause.text = keys["Pause"].ToString();
+        Debug.Log(Up.ToString());
     }
 
     private void OnGUI()
@@ -88,6 +89,7 @@ public class KeyBind : MonoBehaviour
             //no button pressed
             return false;
         }
+
 
         return Input.GetKeyDown(keys[buttonName]);
     }
