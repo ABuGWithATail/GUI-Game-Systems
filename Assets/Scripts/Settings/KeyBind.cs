@@ -14,6 +14,7 @@ public class KeyBind : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //set the base keys for all of these functions.
         keys.Add("Up", KeyCode.W);
         keys.Add("Left", KeyCode.A);
         keys.Add("Down", KeyCode.S);
@@ -23,8 +24,7 @@ public class KeyBind : MonoBehaviour
         keys.Add("Crouch", KeyCode.LeftControl);
         keys.Add("Harm", KeyCode.E);
         keys.Add("Pause", KeyCode.Escape);
-
-
+        //write the names on the buttons in keybinds.
         Up.text = keys["Up"].ToString();
         Left.text = keys["Left"].ToString();
         Down.text = keys["Down"].ToString();
@@ -67,12 +67,14 @@ public class KeyBind : MonoBehaviour
             }
         }
     }
-
+    
+    //this is the one line of code that actually changes the writing on the key! Imagine not having this one line!
     public void ChangeKey(GameObject clickKey)
     {
         currentKey = clickKey;
     }
 
+    //save to playerprefs
     public void SaveKeys()
     {
         foreach (var key in keys)
@@ -82,6 +84,7 @@ public class KeyBind : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    //this changes which key press accesses the functionality
     public bool GetButtonDown (string buttonName)
     {
         if(keys.ContainsKey(buttonName) == false)
@@ -89,8 +92,6 @@ public class KeyBind : MonoBehaviour
             //no button pressed
             return false;
         }
-
-
         return Input.GetKeyDown(keys[buttonName]);
     }
 }

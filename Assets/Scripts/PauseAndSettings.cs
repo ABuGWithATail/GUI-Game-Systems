@@ -13,7 +13,8 @@ public class PauseAndSettings : MonoBehaviour
     public Dropdown resolution;
     private Scene currentScene;
     public AudioMixer masterAudio;
-    
+
+    //this script is my original script from the first assignment, but I have lost the project and got the script, So I'm going to need to remake this script in a new project to get it to work again.
 
     private void Start()
     {

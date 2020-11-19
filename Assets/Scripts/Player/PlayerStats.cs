@@ -36,10 +36,12 @@ public class PlayerStats : MonoBehaviour
     public PlayerController controller;
     public KeyBind inputManager;
     #endregion
+
     private void Start()
     {
         StatTextWriting();
     }
+
     // Update is called once per frame
     void Update()
     {

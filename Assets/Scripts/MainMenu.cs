@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMenuObject;
     public GameObject settingsMenu;
 
-
+    //this sscript is my original script from the first assignment, but I have lost the project and got the script, So I'm going to need to remake this script in a new project to get it to work again.
     public void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape))

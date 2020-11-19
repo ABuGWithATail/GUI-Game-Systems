@@ -8,7 +8,7 @@ public class DamagePlatform : MonoBehaviour
     public Collider playerCol;
     public float Damage = 2;
 
-
+    // I thought this script would work easy peasy, no worries, but collision is fun.
 
     // Update is called once per frame
     public void OnCollisionEnter(Collision collision)

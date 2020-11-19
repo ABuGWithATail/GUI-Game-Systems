@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Variables
     private float walkingSpeed = 7.5f;
     private float runningSpeed = 11.5f;
     private float crouchSpeed = 3.5f;
@@ -14,9 +15,7 @@ public class PlayerController : MonoBehaviour
     private float lookXLimit = 45.0f;
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
-
     
-
     [Header("Attachments")]
     public PlayerStats playerStats;
     CharacterController characterController;
@@ -32,7 +31,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool canMove = true;
     public bool isPaused = false;
-    
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,13 +44,12 @@ public class PlayerController : MonoBehaviour
         //the API tells me that in locked cursor mode, the cursor is invisible regardless but i'll add it here for more clarity.
     }
 
-
     void Update()
     {
         // we are grounded so recalculate move direction based off axis
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
-
+        // this here activates sprinting, crouching and directional movement.
         bool isRunning = inputManager.GetButtonDown("Sprint");
         bool isCrouching = inputManager.GetButtonDown("Crouch");
         float curSpeedX = canMove ? (isRunning ? runningSpeed : (isCrouching ? crouchSpeed : walkingSpeed)) * Input.GetAxis("Vertical") : 0;
@@ -58,8 +57,12 @@ public class PlayerController : MonoBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        //jumping
-        if(inputManager.GetButtonDown("Jump") && canMove && characterController.isGrounded)
+        //move the controller
+        characterController.Move(moveDirection * Time.deltaTime);
+        OutOfStamina();
+
+        //jumping, character must be grounded.
+        if (inputManager.GetButtonDown("Jump") && canMove && characterController.isGrounded)
         {
             moveDirection.y = jumpSpeed;
         }
@@ -72,6 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
+        //these two functions take away and bring back stamina depending on if the character is running or not.
         if(isRunning == true)
         {
             playerStats.currentStamina -= 4 * Time.deltaTime;
@@ -80,10 +84,6 @@ public class PlayerController : MonoBehaviour
         {
             playerStats.currentStamina += 2 * Time.deltaTime;
         }
-
-        //move the controller
-        characterController.Move(moveDirection * Time.deltaTime);
-        OutOfStamina();
 
         // player and camera rotation
         if(canMove)
@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //this function affects sprint speed when the player runs out of stamnina.
     void OutOfStamina()
     {
         if(playerStats.currentStamina <= 0)
@@ -115,11 +116,13 @@ public class PlayerController : MonoBehaviour
             runningSpeed = 11.5f;
         }
     }
+
+    //activates the UI for the pause menu and stops time and activates the cursor. just changes a pause bool between true or not.
     public void Pausing()
     {
         isPaused = !isPaused;
         
-        Debug.Log("The bool is now set to " + isPaused);
+        //Debug.Log("The bool is now set to " + isPaused);
 
         if(isPaused == true)
         {
@@ -143,6 +146,8 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    #region DeathStuff
+    //these functions are the bool that activates player death, and the circumstances around that and respawning. they are called by functions in player stats for the most part.
     public bool IsDead()
     {
         if (playerStats.currentHealth <= 0)
@@ -175,4 +180,5 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+    #endregion
 }
