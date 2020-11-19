@@ -1105,7 +1105,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1761374868}
         m_MethodName: ChangeKey
         m_Mode: 2
         m_Arguments:
@@ -1363,7 +1363,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1761374868}
         m_MethodName: ChangeKey
         m_Mode: 2
         m_Arguments:
@@ -2015,7 +2015,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1761374868}
         m_MethodName: ChangeKey
         m_Mode: 2
         m_Arguments:
@@ -2144,7 +2144,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1761374868}
         m_MethodName: ChangeKey
         m_Mode: 2
         m_Arguments:
@@ -4519,7 +4519,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1761374868}
         m_MethodName: ChangeKey
         m_Mode: 2
         m_Arguments:
@@ -5304,7 +5304,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1761374868}
         m_MethodName: ChangeKey
         m_Mode: 2
         m_Arguments:
@@ -6727,7 +6727,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1761374868}
         m_MethodName: ChangeKey
         m_Mode: 2
         m_Arguments:
@@ -7606,7 +7606,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1761374868}
         m_MethodName: ChangeKey
         m_Mode: 2
         m_Arguments:
@@ -7886,7 +7886,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1761374868}
         m_MethodName: ChangeKey
         m_Mode: 2
         m_Arguments:
@@ -8330,5 +8330,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 2531596274019242288, guid: cf67195bc9bbcc44e9f898e66bd70b03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b96d4160eaeecb44391bcf6dcf700d08, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf67195bc9bbcc44e9f898e66bd70b03, type: 3}

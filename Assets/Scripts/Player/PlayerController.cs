@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private float gravity = 20.0f;    
     private float lookSpeed = 2.0f;
     private float lookXLimit = 45.0f;
+
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
     
@@ -50,16 +51,12 @@ public class PlayerController : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
         // this here activates sprinting, crouching and directional movement.
-        bool isRunning = inputManager.GetButtonDown("Sprint");
-        bool isCrouching = inputManager.GetButtonDown("Crouch");
+        bool isRunning = Input.GetButton("Sprint");
+        bool isCrouching = Input.GetButton("Crouch");
         float curSpeedX = canMove ? (isRunning ? runningSpeed : (isCrouching ? crouchSpeed : walkingSpeed)) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runningSpeed : (isCrouching ? crouchSpeed : walkingSpeed)) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
-
-        //move the controller
-        characterController.Move(moveDirection * Time.deltaTime);
-        OutOfStamina();
 
         //jumping, character must be grounded.
         if (inputManager.GetButtonDown("Jump") && canMove && characterController.isGrounded)
@@ -70,6 +67,7 @@ public class PlayerController : MonoBehaviour
         {
             moveDirection.y = movementDirectionY;
         }
+
         //apply gravity.
         if(!characterController.isGrounded)
         {
@@ -85,8 +83,9 @@ public class PlayerController : MonoBehaviour
             playerStats.currentStamina += 2 * Time.deltaTime;
         }
 
+
         // player and camera rotation
-        if(canMove)
+        if (canMove)
         {
             // looking movement with both a mouse and controller.
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -96,6 +95,10 @@ public class PlayerController : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal2") * lookSpeed, 0);
         }
+
+        //move the controller
+        characterController.Move(moveDirection * Time.deltaTime);
+        OutOfStamina();
 
         //pausing part
         if (inputManager.GetButtonDown("Pause"))
