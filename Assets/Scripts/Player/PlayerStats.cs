@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
-
-
+    #region Variables
     //all of these are public for now but I should make them private before submission.
     [Header("Character Base Stats.")]
     public float strength = 10;
@@ -25,7 +24,6 @@ public class PlayerStats : MonoBehaviour
     public float maxMana = 20f;
     public float currentMana = 20f;
     float damageCooldown;
-    private bool isDead = false;
 
     [Header("UI Elements")]
     public Image radialHealthIcon;
@@ -36,7 +34,8 @@ public class PlayerStats : MonoBehaviour
     public GameObject deathObject;
     public GameObject damageIndicator;
     public PlayerController controller;
-
+    public KeyBind inputManager;
+    #endregion
     private void Start()
     {
         StatTextWriting();
@@ -48,21 +47,20 @@ public class PlayerStats : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         currentMana = Mathf.Clamp(currentMana, 0, maxMana);
-
         damageCooldown -= Time.deltaTime;
 
         HealthChange();
         StaminaChange();
-        ManaChange();
-        
+        ManaChange();        
         if (currentHealth <= 0)
         {
             controller.IsDead();
         }
 
-        //testing for damage. and also allows the overlay for damage.
-        if (Input.GetButtonDown("Self Harm"))
+        if (inputManager.GetButtonDown("Harm"))
         {
+            //as there are no enemies that do damage currently
+            //this is the function for doing damage until I build an enemy that does damage(possibly one of the next assignments.)
             currentHealth--;
             Debug.Log("health is " + currentHealth);
             DamageIndicator();
@@ -83,8 +81,10 @@ public class PlayerStats : MonoBehaviour
         //dealing damage for standing on a platform, dosn't workcurrently because of collider issues.
         currentHealth -= damage * Time.deltaTime;
         DamageIndicator();
+        //this whole function was testing that didn't work. I'm going to keep it here for future implementation
     }
-
+    #region UIStat
+    //these functions work the UI for health stamina and mana changing (although I don't have a function that changes mana yet, I know it works because stamina and health do.
     void HealthChange()
     {
         float amount = Mathf.Clamp01(currentHealth / maxHealth);
@@ -100,27 +100,31 @@ public class PlayerStats : MonoBehaviour
         float amount = Mathf.Clamp01(currentMana / maxMana);
         radialManaIcon.fillAmount = amount;
     }
-
+    //in the pause menu this text will show the player their skill point stats. (I really need differentiating terms for these.)
     void StatTextWriting()
     {
         statText.text = "Strength = " + strength + "\nDexterity = " + dexterity + "\nContitution = " + consitution + "\nIntelligence = " + intelligence + "\nWisdom = " + wisdom + "\nCharisma = " + charisma ;
     }
+    #endregion
 
+    #region DamageFunctions
     void DamageIndicator()
     {
+        //shows damage by flashing the screen red for 0.2 seconds. (0.2 seconds comes from update)
         damageIndicator.SetActive(true);
     }
-
     void RemoveDamageOverlay()
     {
+        //removes that damage overlay after 0.2 seconds
         damageIndicator.SetActive(false);
     }
-
     public void Respawn()
     {
+        //this is half of a function. this resets stats and calls the other function in PlayerController.
         controller.RemoveLossUI();        
         currentHealth = maxHealth;
         currentStamina = maxStamina;
         currentMana = maxMana;        
     }
+    #endregion
 }

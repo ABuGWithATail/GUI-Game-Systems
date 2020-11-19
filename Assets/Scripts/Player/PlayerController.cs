@@ -15,15 +15,19 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
 
+    
+
     [Header("Attachments")]
     public PlayerStats playerStats;
     CharacterController characterController;
     public GameObject pauseObject;
     public GameObject hudObject;
     public GameObject deathObject;
+    public GameObject keyBindObject;
     public Camera playerCamera;
     public GameObject spawn;
     AudioSource audioData;
+    public KeyBind inputManager;
 
     [HideInInspector]
     public bool canMove = true;
@@ -47,15 +51,15 @@ public class PlayerController : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
-        bool isRunning = Input.GetButton("Sprint");
-        bool isCrouching = Input.GetButton("Crouch");
+        bool isRunning = inputManager.GetButtonDown("Sprint");
+        bool isCrouching = inputManager.GetButtonDown("Crouch");
         float curSpeedX = canMove ? (isRunning ? runningSpeed : (isCrouching ? crouchSpeed : walkingSpeed)) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runningSpeed : (isCrouching ? crouchSpeed : walkingSpeed)) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
         //jumping
-        if(Input.GetButton("Jump") && canMove && characterController.isGrounded)
+        if(inputManager.GetButtonDown("Jump") && canMove && characterController.isGrounded)
         {
             moveDirection.y = jumpSpeed;
         }
@@ -94,7 +98,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //pausing part
-        if (Input.GetButtonDown("Pause"))
+        if (inputManager.GetButtonDown("Pause"))
         {
             Pausing();
         }
@@ -134,6 +138,7 @@ public class PlayerController : MonoBehaviour
             Cursor.visible = false;
             hudObject.SetActive(true);
             pauseObject.SetActive(false);
+            keyBindObject.SetActive(false);
         }
 
     }

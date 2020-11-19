@@ -39,10 +39,11 @@ public class KeyBind : MonoBehaviour
     private void OnGUI()
     {
         string newKey = "";
-        if(currentKey != null)
+        
+        if (currentKey != null)
         {
             Event e = Event.current;
-            if(e.isKey)
+            if (e.isKey)
             {
                 newKey = e.keyCode.ToString();
             }
@@ -66,6 +67,11 @@ public class KeyBind : MonoBehaviour
         }
     }
 
+    public void ChangeKey(GameObject clickKey)
+    {
+        currentKey = clickKey;
+    }
+
     public void SaveKeys()
     {
         foreach (var key in keys)
@@ -73,5 +79,16 @@ public class KeyBind : MonoBehaviour
             PlayerPrefs.SetString(key.Key, key.Value.ToString());
         }
         PlayerPrefs.Save();
+    }
+
+    public bool GetButtonDown (string buttonName)
+    {
+        if(keys.ContainsKey(buttonName) == false)
+        {
+            //no button pressed
+            return false;
+        }
+
+        return Input.GetKeyDown(keys[buttonName]);
     }
 }
